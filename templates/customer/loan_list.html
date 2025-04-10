@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Your Loans</h1>
+
+  {% if loans %}
+    <ul>
+      {% for loan in loans %}
+        <li>
+          <a href="{% url 'loan_detail' loan.id %}">{{ loan.amount }} for {{ loan.term_months }} months (Status: {{ loan.status }})</a>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>You have no loans.</p>
+  {% endif %}
+{% endblock %}

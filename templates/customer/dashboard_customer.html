@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+    <title>Customer Dashboard</title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+</head>
+<body>
+    <div class="container mt-4">
+        <h2>Welcome Customer</h2>
+        <a href="{% url 'apply_loan' %}" class="btn btn-primary">Apply for Loan</a>
+        <h3 class="mt-4">Your Loans</h3>
+        <ul>
+            {% for loan in loans %}
+                <li>
+                    {{ loan.amount }} - {{ loan.status }}
+                    {% if loan.status == 'approved' %}
+                        <a href="{% url 'make_payment' loan.id %}" class="btn btn-sm btn-outline-success">Make Payment</a>
+                    {% endif %}
+                </li>
+            {% empty %}
+                <li>No loans yet.</li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>

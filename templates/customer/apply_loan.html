@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Apply for a Loan</h1>
+
+  <form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    
+    <button type="submit">Submit Loan Application</button>
+  </form>
+
+  <br>
+
+  <h2>Loan Configurations</h2>
+  <ul>
+    {% for config in loan_configs %}
+      <li>{{ config.min_amount }} - {{ config.max_amount }} for {{ config.duration_months }} months at {{ config.interest_rate }}% interest</li>
+    {% endfor %}
+  </ul>
+{% endblock %}

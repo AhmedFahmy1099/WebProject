@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+    <title>Bank Personnel Dashboard</title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+</head>
+<body>
+    <div class="container mt-4">
+        <h2>Welcome Bank Personnel</h2>
+        <a href="{% url 'create_config' %}" class="btn btn-info">Create Loan Config</a>
+        <h3 class="mt-4">Pending Loan Requests</h3>
+        <ul>
+            {% for loan in loan_requests %}
+                <li>
+                    {{ loan.customer.user.username }} requested {{ loan.amount }}
+                    <a href="{% url 'approve_loan' loan.id %}" class="btn btn-sm btn-success">Approve</a>
+                </li>
+            {% empty %}
+                <li>No loan requests.</li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>

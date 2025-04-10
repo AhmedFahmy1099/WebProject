@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Loan Details</h1>
+
+  <p>Loan Amount: {{ loan.amount }}</p>
+  <p>Term: {{ loan.term_months }} months</p>
+  <p>Interest Rate: {{ loan.interest_rate }}%</p>
+  <p>Status: {{ loan.status }}</p>
+  <p>Created At: {{ loan.created_at }}</p>
+
+  {% if loan.status == 'pending' and loan.customer == user.userprofile %}
+    <p>Your loan is still pending. Please wait for approval.</p>
+  {% elif loan.status == 'approved' %}
+    <p>Your loan has been approved.</p>
+  {% elif loan.status == 'rejected' %}
+    <p>Your loan was rejected.</p>
+  {% endif %}
+
+  {% if user.userprofile.role == 'personnel' %}
+    <h2>Loan Actions</h2>
+    <form method="POST" action="{% url 'approve_or_reject_loan' loan.id %}">
+      {% csrf_token %}
+      <button type="submit" name="action" value="approve">Approve</button>
+      <button type="submit" name="action" value="reject">Reject</button>
+    </form>
+  {% endif %}
+{% endblock %}
